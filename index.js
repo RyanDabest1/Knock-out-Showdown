@@ -136,6 +136,8 @@ function decreaseTimer() {
         document.querySelector('#displaytext').innerHTML = 'Tie'
     } else if(player.health > enemy.health) {
         document.querySelector('#displaytext').innerHTML = 'Player 1 Wins!'
+    } else if(enemy.health > player.health) {
+        document.querySelector('#displaytext').innerHTML = 'Player 2 Wins!'
     }
  }
 }
