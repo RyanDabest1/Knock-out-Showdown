@@ -37,6 +37,23 @@ const player = new Fighter({
   offset: {
     x: 0,
     y: 0
+  },
+  imageSrc: './img/Yamato/Idle.png',
+  framesMax : 8,
+  scale : 2.5,
+  offset: {
+    x: 250,
+    y: 157
+  },
+  sprites: {
+    idle : {
+        imageSrc : './img/Yamato/Idle.png',
+        framesMax : 8
+    },
+    run: {
+        imageSrc : './img/Yamato/run.png',
+        framesMax : 8
+    }
   }
 })
 
@@ -83,13 +100,14 @@ function animate() {
     background.update()
     shop.update()
     player.update()
-    enemy.update()
+    //enemy.update()
     
     player.velocity.x = 0
 //Player movement
     if(keys.a.pressed && player.lastKey === 'a'){
         player.velocity.x = -5
     } else if (keys.d.pressed && player.lastKey === 'd') {
+        player.image = player.sprites.run.image
         player.velocity.x = 5
     }
 
