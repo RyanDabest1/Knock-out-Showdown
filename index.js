@@ -122,16 +122,9 @@ function retangularCollision({retangle1, retangle2}) {
 
 let lastKey 
 
-let timer = 10
-function decreaseTimer() {
-        if(timer > 0) {
-        setTimeout(decreaseTimer, 1000)
-        timer--
-        document.querySelector('#timer').innerHTML = timer
-
-    }
-    if(timer === 0 ) {
-        document.querySelector('#displaytext').style.display = 'flex'
+function determineWinner({player, enemy, timerid}) {
+    clearTimeout(timerid)
+    document.querySelector('#displaytext').style.display = 'flex'
     if(player.health === enemy.health) {
         document.querySelector('#displaytext').innerHTML = 'Tie'
     } else if(player.health > enemy.health) {
@@ -139,6 +132,19 @@ function decreaseTimer() {
     } else if(enemy.health > player.health) {
         document.querySelector('#displaytext').innerHTML = 'Player 2 Wins!'
     }
+}
+
+let timer = 60
+let timerid 
+function decreaseTimer() {
+        if(timer > 0) {
+        timerid = setTimeout(decreaseTimer, 1000)
+        timer--
+        document.querySelector('#timer').innerHTML = timer
+
+    }
+    if(timer === 0 ) {
+        determineWinner({player, enemy, timerid})
  }
 }
 
@@ -171,7 +177,7 @@ function animate() {
         retangle2: enemy
     }) && player.isAttacking){
         player.isAttacking = false
-        enemy.health -= 15
+        enemy.health -= 20
         document.querySelector('#enemyHealth').style.width = enemy.health + '%'
     }
     if(retangularCollision({
@@ -179,9 +185,14 @@ function animate() {
         retangle2: player
     }) && enemy.isAttacking){
         enemy.isAttacking = false
-        player.health -= 15
+        player.health -= 20
         document.querySelector('#playerHealth').style.width = player.health + '%'
     }
+    if(enemy.health <= 0 || player.health <= 0){
+        determineWinner({player, enemy, timerid})
+
+    }
+
 
 }
 
